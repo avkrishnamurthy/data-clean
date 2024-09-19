@@ -1,13 +1,13 @@
 
 ---
 title: "Evaluation Metrics for Blocking/Entity Resolution"
-author: 'STA 325: Homework 2'
+author: 'Ajay Krishnamurthy - STA 325: Homework 2'
 output:
-  html_document:
-    df_print: paged
   pdf_document:
     includes:
       in_header: custom2.tex
+  html_document:
+    df_print: paged
 font-size: 8px
 ---
 
@@ -101,7 +101,21 @@ f. (1 point) Would blocking on gender be recommended for entity resolution. Expl
 
 \newpage
 
+a. 
+
 ```{r, echo=TRUE, message=FALSE}
+
+# Installing and librarying pacman, plus loading necessary packages
+if(!require("pacman")) {
+install.packages("pacman")
+library(pacman)
+}
+p_load(RecordLinkage, blink, italy, tidyverse, assert)
+```
+
+```{r, echo=TRUE, message=FALSE}
+
+# Loading italy data for 2008 and 2010 and combining them without the id
 library(italy)
 library(assert)
 data(italy08)
@@ -121,9 +135,8 @@ italy <- rbind(italy08, italy10)
 head(italy)
 ```
 
-a. 
-
 ```{r}
+# Blocking by gender
 blocksByGender <- italy$SEX
 recordsPerBlock <- table(blocksByGender)
 head(recordsPerBlock)
@@ -142,7 +155,7 @@ barplot(block_sizes,
         main = "Size of Sex Blocks",
         xlab = "Sex",
         ylab = "Number of Records",
-        ylim = c(0, 16000)) # Setting y-axis limit slightly above the largest value for better view
+        ylim = c(0, 20000)) # Setting y-axis limit slightly above the largest value for better view
 
 # Add text labels showing the size of each block on top of the bars
 text(x = c(1, 2), 
